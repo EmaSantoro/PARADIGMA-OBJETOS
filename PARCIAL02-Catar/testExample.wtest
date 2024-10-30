@@ -1,0 +1,22 @@
+import catar.*
+
+describe "Prueba catadores" {
+  const chefGloton = new Chef(calorias = 100)
+  const pasteleroCremoso = new Pastelero(dulzor = 10)
+  const sousChefito = new SousChef(calorias = 200)
+
+  const catador = new Cocinero(especialidad = chefGloton)
+  const catador2 = new Cocinero(especialidad = pasteleroCremoso)
+  const catador3 = new Cocinero(especialidad = sousChefito)
+
+const participante1 = new Cocinero(especialidad = chefGloton)
+const participante2 = new Cocinero(especialidad = pasteleroCremoso)
+
+const torneito = new Torneo(catadores = [chefGloton, pasteleroCremoso, sousChefito], platosParticipantes = [])
+  test "description" {
+    participante1.presentarseATorneo(torneito, participante1)
+    participante2.presentarseATorneo(torneito, participante2)
+
+  assert.equals(torneito.definirGanador(), participante2)
+  }
+}

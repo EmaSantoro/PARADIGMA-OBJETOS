@@ -1,0 +1,58 @@
+import miguelito.*    // Importar el paquete de la clase
+//import PARCIAL01-Miguelito.*
+
+const bife = new CorteCarne(peso = 300, estaAPunto = true)
+const hamburguesa = new HamburguesasDeCarne(pesoMedallon = 200, pan = panCasero)
+const hamburguesaApta = new HamburguesaDoble(pesoMedallon = 200, pan = panMaiz)
+
+describe "Una parrillada con al menos tres componentes y probar casos significativos" {
+    const parrillada = new Parrillada(componentes = [bife, hamburguesa])
+    const parrilladaAptaCeliacos = new Parrillada(componentes = [bife, bife, hamburguesaApta])
+    
+    test "El peso es la suma de los pesos de todo lo que lo compone" {
+        assert.equals(parrillada.peso(), 600)
+    }
+
+    test "Es especial si tiene al menos tres componentes" {
+        assert.that(parrilladaAptaCeliacos.esEspecial())
+    }
+
+    test "No es especial si no tiene al menos tres componentes" {
+        assert.notThat(parrillada.esEspecial())
+    }
+
+    test "Es apto para celiacos si todos sus componentes lo son" {
+        assert.that(parrilladaAptaCeliacos.aptoCeliaco())
+    }
+
+    test "No es apto para celiacos si al menos uno de sus componentes no lo es" {
+        assert.notThat(parrillada.aptoCeliaco())
+    }
+
+    test "Su valorracion es  la mas alta de todo lo que la compone" {
+        assert.equals(parrillada.valoracion(), 100)
+    }
+}
+
+describe "Hacer que un comensal se de un gusto en la parrilla" {
+    const comensalCeliaco = new Comensal(dinero = 10000, preferencia = celiacos)
+    const comensalTodoTerreno = new Comensal(dinero = 10000, preferencia = todoTerreno)
+
+    method initialize(){
+		parrillaMiguelito.agregarPlatoAlMenu(hamburguesa)
+	}
+
+    test "Un comensal se puede dar un gusto" {
+		comensalTodoTerreno.darseUnGusto()
+		assert.equals(comensalTodoTerreno.dinero(), 1000)
+	}   
+
+    test "Un comensal no se puede dar un gusto" {
+		assert.throwsExceptionWithMessage("No hay platos que puedan ser comprados", {comensalCeliaco.darseUnGusto()})
+	}
+
+    test "Un comensal todo terreno no puede comer con gluten si le dieron problemas gastricos" {
+		comensalTodoTerreno.problemasCeliacos()
+		assert.throwsExceptionWithMessage("No hay platos que puedan ser comprados", {comensalTodoTerreno.darseUnGusto()})
+	}
+}
