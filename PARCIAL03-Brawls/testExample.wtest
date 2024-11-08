@@ -1,0 +1,32 @@
+import brawls.*
+
+const flechero = new Arqueros(agilidad = 10, rango = 100)
+const flecheroPT = new Arqueros(agilidad = 10, rango = 100)
+const guerrera = new Guerreras(tieneEstrategia = true, fuerza = 10)
+const ballestero = new Ballesteros(agilidad = 10, rango = 200)
+
+describe "Una mision individual debe ser realizada" {
+  const misionArcoYFlecha = new MisionIndividual(personaje = flechero, dificultad = 10)
+  const misionArcoYFlecha2 = new MisionIndividual(personaje = flecheroPT, dificultad = 10)
+  method initialize() { flechero.ganarCopas(10) }
+
+  test "Flechero puede superar la mision arco y flecha" {
+    assert.that(misionArcoYFlecha.puedeSuperar())
+  }
+
+  test "Flechero sin copas no puede realizar la mision arco y flecha" {
+    assert.that(!misionArcoYFlecha2.puedeRealizar())
+  }
+
+  test "Flechero con copas realiza la mision arco y flecha" {
+    misionArcoYFlecha.realizar()
+    assert.equals(flechero.cantidadDeCopas(), 30)
+  }
+
+  test"Flechero realiza una mision BOOST"{
+    const misionBoost = new Boost(multiplicador = 3)
+    misionArcoYFlecha.formaDePremiar(misionBoost)
+    misionArcoYFlecha.realizar()
+    assert.equals(flechero.cantidadDeCopas(), 70)
+  }
+}
