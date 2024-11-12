@@ -1,9 +1,28 @@
-import example.pepita
+import starwars.*
 
-describe "group of tests for pepita" {
+describe "HALCON" {
+    const han = new Soldado(valentia = 10, inteligencia = 10)
+    const chubby = new Soldado(valentia = 20, inteligencia = 20)
+    const halcon = new Item(potencia = 100, desgaste = false)
 
-  test "pepita has initial energy" {
-    assert.equals(100, pepita.energy())
+    method initialize(){
+		han.sumarEquipamiento(halcon)
+        chubby.sumarEquipamiento(halcon)
+	}
+    test "Han y Chubby tienen el Halcón Milenario y con el uso se desgastó" {
+        han.usarItem(halcon)
+        assert.equals(halcon.estaDesgastado(), true)
+    }
+
+    test "han toma el Halcón Milenario y arregla" {
+        han.reparar(halcon)
+        assert.equals(halcon.estaDesgastado(), false)
+    }
+}
+
+describe "Tatooine" {
+    const tatooine = new Planeta()
+  test "description" {
+    
   }
-
 }
